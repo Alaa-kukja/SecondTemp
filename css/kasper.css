@@ -2,6 +2,7 @@
     --main-color: #19c8fa;
     --transparent-color: rgb(15 116 143 / 70%);
     --section-padding: 100px;
+    /* --section-margin-top: 100px; */
 }
 
 * {
@@ -19,6 +20,26 @@ html {
 body {
     font-family: 'Open Sans', sans-serif;
 
+}
+
+.up {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background-color: var(--main-color);
+    border-radius: 6px;
+    right: -30px;
+    bottom: 10px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+    z-index: 9999999999999999;
+}
+
+.up.show {
+    right: 10px;
 }
 
 ul {
@@ -96,10 +117,22 @@ ul {
 }
 
 header {
-    position: absolute;
+    position: fixed;
     left: 0;
+    top: 0;
     width: 100%;
     z-index: 2;
+    transition: .3s;
+    z-index: 99999;
+}
+
+header.sticky {
+    /* padding: 3px 100px; */
+    background-color: #778788;
+}
+
+header.sticky ul li a {
+    color: #2a2a2a;
 }
 
 header .container {
@@ -121,6 +154,7 @@ header .container::after {
 }
 
 header .container .logo {
+    position: relative;
     height: 40px;
 }
 
@@ -142,10 +176,9 @@ header nav .toggle-menu {
     }
 }
 
-
-
 header nav ul {
     display: flex;
+
 }
 
 @media (max-width:767px) {
@@ -187,6 +220,7 @@ header nav ul li a:hover {
     border-bottom: 1px solid var(--main-color);
 }
 
+/* ///////////////////// The Form ////////////////// */
 header .form {
     height: 30px;
     width: 40px;
@@ -195,19 +229,71 @@ header .form {
     border-left: 1px solid white;
 }
 
-header .form i {
+header .form .input {
+    background-color: #fff;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    caret-color: var(--main-color);
+    transition: width 0.3s ease;
+}
+
+header .form .btn {
+    background-color: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    max-width: 100%;
+    transition: transform 0.3s ease;
+}
+
+header .form .btn i {
     color: white;
     position: absolute;
-    font-size: 20px;
+    font-size: 18px;
     top: 50%;
     transform: translateY(-50%);
     right: 0;
 }
 
+header .form .btn:focus,
+header .form .input:focus {
+
+    outline: none;
+}
+
+header .form .input {
+    display: none;
+}
+
+header .form.active .input {
+    display: block;
+    /* max-width: 100%; */
+    width: 195px;
+    transform: translateX(-220px);
+}
+
+/* ////////////////////////// Responsive Form ////////////////////*/
+
+@media (max-width: 992px) {
+    header .form.active .input {
+        display: block;
+        width: 102px;
+        transform: translateX(-105px);
+    }
+}
+
 .landing {
     min-height: 100vh;
-    background-color: blue;
-    background-image: url(../images/landing.jpg);
+    /* background-color: blue; */
+    /* background-image: url(../images/landing.jpg); */
     background-size: cover;
     position: relative;
 }
@@ -260,6 +346,36 @@ header .form i {
 .landing .text .content p {
     font-size: 14px;
     line-height: 1.6;
+}
+
+.landing .slider-container {
+    position: relative;
+}
+
+.landing .slider-container img {
+    width: 100%;
+    height: 100vh;
+    max-width: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: -1;
+}
+
+.slider-container img.active {
+    opacity: 1;
+}
+
+.landing .slider-controls {
+    width: 800px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slider-controls .prev.disabled,
+.slider-controls .next.disabled {
+    color: rgba(24, 26, 25, 0.13);
+    cursor: no-drop;
 }
 
 .landing .change-background {
@@ -433,6 +549,7 @@ header .form i {
 
 .portfolio .shuffle li {
     padding: 10px;
+    cursor: pointer;
 }
 
 .portfolio .shuffle li.active {
@@ -442,6 +559,7 @@ header .form i {
 
 .portfolio .imgs-container {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     margin-top: 60px;
 }
@@ -676,14 +794,34 @@ header .form i {
     margin-bottom: 60px;
 }
 
-.our-skills .testimonials .content {
+.our-skills .testimonials .core-container {
+    position: relative;
+}
+
+.our-skills .testimonials .core-container .core {
+    width: 100%;
+    /* height: 100vh; */
+    max-width: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: -1;
+}
+
+.our-skills .testimonials .core-container .core.active {
+    opacity: 1;
+}
+
+
+.our-skills .testimonials .core-container .core .content {
     display: flex;
     margin-bottom: 30px;
     align-items: center;
 }
 
-.our-skills .testimonials .content img {
+.our-skills .testimonials .core-container .core .content img {
     width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin-right: 50px;
 }
@@ -711,11 +849,16 @@ header .form i {
     margin-bottom: 10px;
 }
 
-.our-skills .testimonials .bullets {
+.our-skills .testimonials .core-control {
+    position: relative;
+    height: 50vh;
+}
+
+.our-skills .testimonials .core-control .bullets {
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
     display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 .our-skills .testimonials .bullets li {
@@ -751,6 +894,7 @@ header .form i {
     height: 100%;
     position: relative;
     display: block;
+    transition: width .5s ease;
 }
 
 .our-skills .skills .prog-holder .prog span::before {
