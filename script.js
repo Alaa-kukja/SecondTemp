@@ -8,15 +8,13 @@ upSpan.onclick = function () {
     });
 };
 
-/////////////////////Transition in navigation menu //////////////////////////
-let menu = document.querySelectorAll('.nav-menu li a');
-let menuLinks = Array.from(menu);
+/////////////////////Transition for navigation menu in mobile //////////////////////////
+let menuMobile = document.querySelector('.toggle-menu');
+let menuLB = document.querySelector('.nav-menu');
 
-function linkAction() {
-    menuLinks.forEach((li) => li.classList.remove('active'));
-    this.classList.add('active');
-}
-menuLinks.forEach((link) => link.addEventListener('click', linkAction));
+menuMobile.onclick = function () {
+    menuLB.classList.add('shown');
+};
 
 //////////////////The search Input In Navigation Bar //////////////////////////
 let form = document.querySelector('.form');
@@ -147,6 +145,11 @@ ArrayShuffle.forEach((ele) => {
     });
 });
 
+//////////////////////////////All of sections //////////////////////
+let sections = document.querySelectorAll('.section');
+let menu = document.querySelectorAll('.nav-menu li a');
+// let menuLinks = Array.from(menu);
+// console.log(sections);
 //////////////////////////////Action will happen on scroll///////////////////////////
 let sectionStat = document.querySelector('.stats');
 let boxNumbers = document.querySelectorAll('.box .number');
@@ -155,11 +158,23 @@ let sectionPlan = document.querySelector('.pricing');
 let planNumbers = document.querySelectorAll('.plan .num');
 
 let interval = 4000;
+
 //////////////Our skills on scroll/////////////////////
 let sectionSkills = document.querySelector('.our-skills');
 let progSpans = document.querySelectorAll('.prog span');
 
 window.onscroll = function () {
+    ////////////for links in navigation bar
+    sections.forEach((sec) => {
+        let id = sec.getAttribute('id');
+        if (this.scrollY >= sec.offsetTop - 150 && this.scrollY < sec.offsetTop + sec.offsetHeight) {
+            menu.forEach((links) => {
+                links.classList.remove('active');
+                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
+                menuLB.classList.remove('shown');
+            });
+        }
+    });
     ////////////for up button
     if (this.scrollY >= 400) {
         upSpan.classList.add('show');
